@@ -12,13 +12,13 @@
         <div class="home-hero-copy">
             <p class="eyebrow"><span></span> WELCOME TO COMMONWEALTH</p>
             <h1 id="home-hero-title">Know the structure<br><em>before you invest.</em></h1>
-            <p class="home-hero-lede">Explore how savings, pooled funds, and public markets work. Review the details and risks before considering an offer.</p>
+            <p class="home-hero-lede">Research digital assets, public companies, operating businesses, and real assets. Each overview explains possible structures, key risks, and questions that need answers.</p>
             <div class="hero-actions">
-                <a class="button button-gold" href="{{ route('opportunities.index') }}">Explore investment categories <span aria-hidden="true">&rarr;</span></a>
+                <a class="button button-gold" href="{{ route('themes.index') }}">Explore research areas <span aria-hidden="true">&rarr;</span></a>
                 @if (Route::has('register'))<a class="home-text-link" href="{{ route('register') }}">Create an account <span aria-hidden="true">&rarr;</span></a>@endif
                 <a class="home-text-link" href="{{ route('how-it-works') }}">How Commonwealth works <span aria-hidden="true">&rarr;</span></a>
             </div>
-            <p class="home-hero-note">Commonwealth is not currently offering investments or deposit services.</p>
+            <p class="home-hero-note">Research only. No live investments, deposits, withdrawals, or custody are available.</p>
             <a class="home-scroll-cue" href="#commonwealth-journey"><span>SCROLL TO EXPLORE</span><svg viewBox="0 0 16 28" aria-hidden="true"><path d="M8 1v23m-6-6 6 6 6-6"/></svg></a>
         </div>
         <div class="home-hero-stage">
@@ -82,37 +82,23 @@
 <section class="product-section" id="products">
     <div class="container-xl">
         <div class="home-section-heading">
-            <div><p class="eyebrow home-eyebrow"><span></span> EXPLORE THE LANDSCAPE</p><h2>How would you like<br>to explore?</h2></div>
-            <p>These are educational categories, not available financial products. Any future offer must have documented legal rights, clear risks, and applicable review.</p>
+            <div><p class="eyebrow home-eyebrow"><span></span> EXPLORE THE LANDSCAPE</p><h2>Markets, businesses<br>and real assets.</h2></div>
+            <p>Explore 15 research areas across digital assets, public markets, brands, operating businesses, and property. These pages explain structures and risks; they are not active offers or claims of affiliation.</p>
         </div>
-        <div class="product-grid">
-            <article class="product-card">
-                <figure class="product-card-media"><img src="https://images.unsplash.com/photo-1633158829875-e5316a358c6f?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="A small green plant growing beside a jar of coins" width="1000" height="650" loading="lazy" decoding="async"><figcaption>Photo by Towfiqu barbhuiya · Unsplash</figcaption></figure>
-                <div class="product-card-content"><span class="product-kicker">EDUCATIONAL CATEGORY</span><h3>Savings</h3>
-                <p>Learn about savings and fixed-term structures. Commonwealth does not currently offer a savings account or interest product.</p>
-                <a href="{{ route('how-it-works') }}">Understand the approach <span>→</span></a></div>
-            </article>
-            <article class="product-card">
-                <figure class="product-card-media"><img src="https://images.unsplash.com/photo-1758518727707-729d9bef1a16?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="A small group of professionals reviewing a financial report together" width="1000" height="650" loading="lazy" decoding="async"><figcaption>Photo by Vitaly Gariev · Unsplash</figcaption></figure>
-                <div class="product-card-content"><span class="product-kicker">EDUCATIONAL CATEGORY</span><h3>Mutual funds</h3>
-                <p>Explore how pooled investment funds may be structured. No fund, manager relationship, or return is represented as available here.</p>
-                <a href="{{ route('opportunities.index') }}">Browse reviewed opportunities <span>→</span></a></div>
-            </article>
-            <article class="product-card">
-                <figure class="product-card-media"><img src="https://images.unsplash.com/photo-1591696205602-2f950c417cb9?auto=format&amp;fit=crop&amp;w=1000&amp;q=82" alt="A laptop displaying a stock market chart" width="1000" height="650" loading="lazy" decoding="async"><figcaption>Photo by Markus Winkler · Unsplash</figcaption></figure>
-                <div class="product-card-content"><span class="product-kicker">EDUCATIONAL CATEGORY</span><h3>Stocks &amp; public markets</h3>
-                <p>Learn about listed securities and market risk. Company or ticker references do not mean shares are offered or ownership is available.</p>
-                <a href="{{ route('opportunities.index') }}">Explore the catalog <span>→</span></a></div>
-            </article>
+        <div class="theme-grid theme-grid--featured">
+            @foreach ($featuredThemes as $theme)
+                @include('themes._card', ['theme' => $theme])
+            @endforeach
         </div>
+        <div class="theme-home-action"><a class="button button-navy" href="{{ route('themes.index') }}">Explore all 15 research areas <span aria-hidden="true">→</span></a></div>
     </div>
 </section>
 
 <section class="trust-section" id="trust">
     <div class="container-xl trust-grid">
         <div class="trust-emblem" aria-hidden="true"><svg viewBox="0 0 48 48" focusable="false"><path d="M24 4 39 10v11c0 10-6 18-15 23C15 39 9 31 9 21V10l15-6Z"/><path d="m17 23 5 5 10-11"/></svg></div>
-        <div class="trust-copy"><p class="eyebrow"><span></span> CLARITY BEFORE CLAIMS</p><h2>Posted records.<br>Clear disclosures.</h2><p>Every displayed balance must come from posted ledger records. Opportunities stay out of the public catalog until required legal review and supporting documents are recorded.</p></div>
-        <div class="trust-status"><span class="status-dot"></span><div><strong>Service availability</strong><p>Live investment offers and deposit services are not available. Commonwealth does not claim regulatory approval or securities licensing.</p><a href="{{ route('risk-disclosure') }}">Read the risk disclosure <span>→</span></a></div></div>
+        <div class="trust-copy"><p class="eyebrow"><span></span> CLARITY BEFORE CLAIMS</p><h2>Know what is live.<br>And what is not.</h2><p>Balances are based on posted ledger records. Commonwealth currently lists no live offers and does not accept deposits, withdrawals, or investment orders.</p></div>
+        <div class="trust-status"><span class="status-dot"></span><div><strong>Current service status</strong><p>No live investment offers, deposits, withdrawals, or custody are available. Operator and provider details are not yet published.</p><a href="{{ route('trust') }}">Review trust and service status <span>→</span></a></div></div>
     </div>
 </section>
 
@@ -148,6 +134,6 @@
 </section>
 
 <section class="closing-section">
-    <div class="container-xl closing-inner"><div><p class="eyebrow"><span></span> INVEST WITH INFORMATION</p><h2>Start with a clearer view.</h2><p>Explore what the platform is building and the safeguards required before live services can begin.</p></div><a class="button button-gold" href="{{ route('opportunities.index') }}">Explore categories <span>→</span></a></div>
+    <div class="container-xl closing-inner"><div><p class="eyebrow"><span></span> INVEST WITH INFORMATION</p><h2>Start with a clearer view.</h2><p>Explore what the platform is building and the safeguards required before live services can begin.</p></div><a class="button button-gold" href="{{ route('themes.index') }}">Browse research areas <span>→</span></a></div>
 </section>
 @endsection

@@ -1,4 +1,5 @@
 import './bootstrap';
+import './themes';
 import 'bootstrap';
 import Chart from 'chart.js/auto';
 

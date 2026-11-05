@@ -8,7 +8,7 @@
     <meta name="description" content="@yield('description', 'An international investment and asset management platform.')">
     @if (request()->routeIs('terms', 'privacy', 'aml-kyc'))<meta name="robots" content="noindex, nofollow">@endif
     <link rel="icon" type="image/svg+xml" href="{{ asset('images/commonwealth-mark.svg') }}">
-    @vite(['resources/css/app.css', 'resources/css/fintechx.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/fintechx.css', 'resources/css/themes.css', 'resources/js/app.js'])
 </head>
 <body class="fintechx-site @yield('body-class')">
 <header class="site-header">
@@ -17,7 +17,9 @@
         <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation"><span></span><span></span><span></span></button>
         <div class="site-nav-menu" id="site-nav-menu">
             <div class="site-nav-links">
-                <a href="{{ route('opportunities.index') }}">Product</a>
+                <a href="{{ route('themes.index') }}">Investment areas</a>
+                <a href="{{ route('opportunities.index') }}">Reviewed offers</a>
+                <a href="{{ route('trust') }}">Trust &amp; status</a>
                 <a href="{{ route('faq') }}">Resources</a>
                 <a href="{{ route('about') }}">Company</a>
             </div>
@@ -45,13 +47,15 @@
         </div>
         <nav class="footer-column" aria-label="Platform links">
             <h2>Platform</h2>
-            <a href="{{ route('opportunities.index') }}">Opportunities</a>
+            <a href="{{ route('themes.index') }}">Investment areas</a>
+            <a href="{{ route('opportunities.index') }}">Reviewed offers</a>
             <a href="{{ route('how-it-works') }}">How it works</a>
             <a href="{{ route('payment-methods') }}">Payment information</a>
         </nav>
         <nav class="footer-column" aria-label="Resources links">
             <h2>Resources</h2>
             <a href="{{ route('faq') }}">FAQs</a>
+            <a href="{{ route('trust') }}">Trust &amp; status</a>
             <a href="{{ route('risk-disclosure') }}">Risk disclosure</a>
             <a href="{{ route('terms') }}">Terms</a>
             <a href="{{ route('privacy') }}">Privacy</a>

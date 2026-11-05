@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Create account | Commonwealth')
 @section('content')
-<section class="auth-shell"><div class="auth-card"><p class="eyebrow dark-eyebrow"><span></span> INVESTOR PORTAL</p><h1>Create your account</h1><p class="auth-subtitle">Start with a secure account. Verification requirements may vary by jurisdiction.</p>
+<section class="auth-shell"><div class="auth-card"><p class="eyebrow dark-eyebrow"><span></span> COMMONWEALTH ACCOUNT</p><h1>Create your account</h1><p class="auth-subtitle">Review digital assets, public markets, businesses, and real-asset research in one place.</p><div class="register-status-note"><strong>Know the current status:</strong> Commonwealth is not currently offering investments, deposits, withdrawals, or custody. Creating an account does not make an investment available. <a href="{{ route('themes.index') }}">Review the 15 research areas</a>.</div>
 @if ($errors->any())<div class="alert alert-danger"><ul class="mb-0">@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
 <form method="POST" action="{{ route('register.store') }}">@csrf
 <label for="name">Full name</label><input id="name" class="form-control" name="name" value="{{ old('name') }}" autocomplete="name" maxlength="120" required>

@@ -18,6 +18,31 @@ class InformationPageController extends Controller
                 ['title' => 'Designed to grow carefully', 'body' => 'International availability depends on legal review, investor eligibility, identity controls, and service providers in each jurisdiction.'],
             ],
         ],
+        'trust' => [
+            'title' => 'Trust and service status',
+            'intro' => 'A clear record of what Commonwealth currently provides, what it does not provide, and what must be verified before any live investment service.',
+            'facts' => [
+                ['label' => 'Reviewed investment offers', 'value' => 'None currently listed'],
+                ['label' => 'Deposits and withdrawals', 'value' => 'Not available'],
+                ['label' => 'Asset custody', 'value' => 'Not provided'],
+                ['label' => 'Operator and provider details', 'value' => 'Not yet published'],
+            ],
+            'sections' => [
+                ['title' => 'Who operates the service', 'body' => 'This website does not currently publish a verified operating entity, regulated provider, or supported-market list. It makes no claim of regulatory approval, authorization, or licensing. Any future service should identify its operator and providers so visitors can verify them independently.'],
+                ['title' => 'What is available today', 'body' => 'Commonwealth provides general research information. The reviewed-offers catalogue currently contains no live offerings. The platform does not accept deposits, withdrawals, or investment orders and does not provide asset custody. Creating an account does not change this status.'],
+                ['title' => 'Research, images, and affiliations', 'body' => 'References to companies, products, brands, sports leagues, studios, and assets identify research topics only. They do not establish ownership rights, available securities, or an affiliation or endorsement. Images are illustrative. These pages do not publish live prices, valuations, or investment performance.'],
+                ['title' => 'What a future offer should disclose', 'body' => 'Before any offer is listed, its materials should identify the issuer and legal instrument, the rights offered, supported jurisdictions and eligibility, fees, liquidity limits, custody and service providers, material risks, source dates, and governing documents. This describes a review standard; it does not mean an offer exists.'],
+                ['title' => 'Account and administrative controls', 'body' => 'Account and administrative access uses verified email and permission checks. Administrative sign-ins and investor account-status changes are recorded in audit logs. Commonwealth does not claim an independent security certification or penetration-test result.'],
+                ['title' => 'Policy readiness', 'body' => 'The Terms, Privacy, and AML/KYC pages are marked as working drafts. They require completion for the confirmed operating entity and launch markets before any live financial service begins.'],
+            ],
+            'links' => [
+                ['label' => 'Terms and conditions', 'route' => 'terms'],
+                ['label' => 'Privacy notice', 'route' => 'privacy'],
+                ['label' => 'Risk disclosure', 'route' => 'risk-disclosure'],
+                ['label' => 'AML and identity information', 'route' => 'aml-kyc'],
+                ['label' => 'Contact the platform', 'route' => 'contact'],
+            ],
+        ],
         'how-it-works' => [
             'title' => 'How the platform is intended to work',
             'intro' => 'A transparent flow from account setup to documented records.',

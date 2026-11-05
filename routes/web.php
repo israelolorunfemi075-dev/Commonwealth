@@ -11,10 +11,14 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Investor\DashboardController as InvestorDashboardController;
 use App\Http\Controllers\OpportunityController;
+use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\InformationPageController;
+use App\Http\Controllers\Public\InvestmentThemeController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home')->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/investment-themes', [InvestmentThemeController::class, 'index'])->name('themes.index');
+Route::get('/investment-themes/{slug}', [InvestmentThemeController::class, 'show'])->name('themes.show');
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 Route::get('/opportunities/{slug}', [OpportunityController::class, 'show'])->name('opportunities.show');
 
@@ -25,6 +29,7 @@ if (config('platform.contact_form_enabled')) {
 }
 
 Route::get('/about', [InformationPageController::class, 'show'])->defaults('page', 'about')->name('about');
+Route::get('/trust', [InformationPageController::class, 'show'])->defaults('page', 'trust')->name('trust');
 Route::get('/how-it-works', [InformationPageController::class, 'show'])->defaults('page', 'how-it-works')->name('how-it-works');
 Route::get('/payment-methods', [InformationPageController::class, 'show'])->defaults('page', 'payment-methods')->name('payment-methods');
 Route::get('/faq', [InformationPageController::class, 'show'])->defaults('page', 'faq')->name('faq');
@@ -56,26 +61,28 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/investor/dashboard', InvestorDashboardController::class)
         ->middleware(['verified', 'permission:dashboard.view'])->name('investor.dashboard');
-    Route::get('/admin', AdminDashboardController::class)
-        ->middleware('permission:admin.dashboard.view')->name('admin.dashboard');
-    Route::get('/admin/investors', [AdminInvestorController::class, 'index'])
-        ->middleware('permission:investors.view')->name('admin.investors.index');
-    Route::get('/admin/investors/{user}', [AdminInvestorController::class, 'show'])
-        ->middleware('permission:investors.view')->name('admin.investors.show');
-    Route::patch('/admin/investors/{user}/status', [AdminInvestorController::class, 'updateStatus'])
-        ->middleware('permission:investors.manage')->name('admin.investors.status');
+    Route::middleware('verified')->prefix('admin')->name('admin.')->group(function (): void {
+        Route::get('/', AdminDashboardController::class)
+            ->middleware('permission:admin.dashboard.view')->name('dashboard');
+        Route::get('/investors', [AdminInvestorController::class, 'index'])
+            ->middleware('permission:investors.view')->name('investors.index');
+        Route::get('/investors/{user}', [AdminInvestorController::class, 'show'])
+            ->middleware('permission:investors.view')->name('investors.show');
+        Route::patch('/investors/{user}/status', [AdminInvestorController::class, 'updateStatus'])
+            ->middleware('permission:investors.manage')->name('investors.status');
 
-    Route::get('/admin/transactions', [AdminFinancialTransactionController::class, 'index'])
-        ->middleware('permission:ledger.view')->name('admin.transactions.index');
-    Route::get('/admin/transactions/{transaction}', [AdminFinancialTransactionController::class, 'show'])
-        ->middleware('permission:ledger.view')->name('admin.transactions.show');
+        Route::get('/transactions', [AdminFinancialTransactionController::class, 'index'])
+            ->middleware('permission:ledger.view')->name('transactions.index');
+        Route::get('/transactions/{transaction}', [AdminFinancialTransactionController::class, 'show'])
+            ->middleware('permission:ledger.view')->name('transactions.show');
 
-    Route::get('/admin/deposits', [AdminFinancialRequestController::class, 'deposits'])
-        ->middleware('permission:deposits.review')->name('admin.deposits.index');
-    Route::get('/admin/deposits/{depositRequest}', [AdminFinancialRequestController::class, 'deposit'])
-        ->middleware('permission:deposits.review')->name('admin.deposits.show');
-    Route::get('/admin/withdrawals', [AdminFinancialRequestController::class, 'withdrawals'])
-        ->middleware('permission:withdrawals.review')->name('admin.withdrawals.index');
-    Route::get('/admin/withdrawals/{withdrawalRequest}', [AdminFinancialRequestController::class, 'withdrawal'])
-        ->middleware('permission:withdrawals.review')->name('admin.withdrawals.show');
+        Route::get('/deposits', [AdminFinancialRequestController::class, 'deposits'])
+            ->middleware('permission:deposits.review')->name('deposits.index');
+        Route::get('/deposits/{depositRequest}', [AdminFinancialRequestController::class, 'deposit'])
+            ->middleware('permission:deposits.review')->name('deposits.show');
+        Route::get('/withdrawals', [AdminFinancialRequestController::class, 'withdrawals'])
+            ->middleware('permission:withdrawals.review')->name('withdrawals.index');
+        Route::get('/withdrawals/{withdrawalRequest}', [AdminFinancialRequestController::class, 'withdrawal'])
+            ->middleware('permission:withdrawals.review')->name('withdrawals.show');
+    });
 });

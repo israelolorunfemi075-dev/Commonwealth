@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Domain\Ledger\LedgerPostingService;
+use App\Models\AuditLog;
 use App\Models\FinancialAccount;
 use App\Models\Role;
 use App\Models\User;
@@ -64,7 +65,24 @@ class AuthenticationAuthorizationTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
         $this->get(route('admin.dashboard'))->assertOk()->assertSee('ADMINISTRATION');
+        $this->assertDatabaseHas('audit_logs', [
+            'actor_id' => $user->id,
+            'action' => 'admin.session.started',
+        ]);
     }
+
+    public function test_unverified_administrator_is_redirected_to_email_verification(): void
+    {
+        $this->seed();
+        $administratorRole = Role::query()->where('slug', 'administrator')->firstOrFail();
+        $user = User::factory()->create(['email_verified_at' => null]);
+        $user->forceFill(['role_id' => $administratorRole->id])->save();
+
+        $this->actingAs($user)
+            ->get(route('admin.dashboard'))
+            ->assertRedirect(route('verification.notice'));
+    }
+
     public function test_investor_cannot_open_administrator_dashboard(): void
     {
         $this->seed();
