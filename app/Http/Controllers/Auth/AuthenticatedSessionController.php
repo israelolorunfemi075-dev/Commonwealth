@@ -34,17 +34,14 @@ class AuthenticatedSessionController extends Controller
             ]);
         }
 
-        $isAdministrator = $request->boolean('remember')
-            && User::query()
-                ->where('email', strtolower($credentials['email']))
-                ->whereHas('role.permissions', fn ($query) => $query->where('name', 'admin.dashboard.view'))
-                ->exists();
+        $user = User::query()->where('email', strtolower($credentials['email']))->first();
+        $shouldRemember = $request->boolean('remember') && ! ($user?->hasPermission('admin.dashboard.view') ?? false);
 
         if (! Auth::attempt([
             'email' => strtolower($credentials['email']),
             'password' => $credentials['password'],
             'status' => 'active',
-        ], $request->boolean('remember') && ! $isAdministrator)) {
+        ], $shouldRemember)) {
             RateLimiter::hit($key, 60);
             throw ValidationException::withMessages(['email' => 'The sign-in details could not be verified.']);
         }

@@ -8,6 +8,7 @@ use App\Models\FinancialAccount;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class AuthenticationAuthorizationTest extends TestCase
@@ -69,6 +70,26 @@ class AuthenticationAuthorizationTest extends TestCase
             'actor_id' => $user->id,
             'action' => 'admin.session.started',
         ]);
+    }
+
+    public function test_admin_sign_in_with_remember_me_stays_non_persistent(): void
+    {
+        $this->seed();
+        $administratorRole = Role::query()->where('slug', 'administrator')->firstOrFail();
+        $user = User::factory()->create([
+            'email' => 'admin-remember@example.test',
+            'email_verified_at' => now(),
+        ]);
+        $user->forceFill(['role_id' => $administratorRole->id])->save();
+
+        $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+            'remember' => '1',
+        ])->assertRedirect(route('admin.dashboard'));
+
+        $this->assertTrue(Auth::check());
+        $this->assertFalse(Auth::viaRemember());
     }
 
     public function test_unverified_administrator_is_redirected_to_email_verification(): void
